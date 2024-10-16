@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatsScreen extends StatelessWidget {
@@ -5,8 +6,8 @@ class ChatsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-
+    return  Scaffold(
+body: Center(child: Icon(CupertinoIcons.videocam_circle_fill)),
     );
   }
 }
