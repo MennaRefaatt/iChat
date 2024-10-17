@@ -12,9 +12,14 @@ import '../../../../../core/widgets/app_button.dart';
 import '../manager/login_cubit.dart';
 import '../widgets/email_and_pass.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final cubit = LoginCubit(sl());
 
   @override

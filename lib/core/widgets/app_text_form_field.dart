@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../styles/app_colors.dart';
 
 class AppTextFormField extends StatefulWidget {
@@ -29,7 +28,7 @@ class AppTextFormField extends StatefulWidget {
   final bool? enable;
   // late FocusNode? focusNode;
   final Color? borderColor;
-   AppTextFormField({
+   const AppTextFormField({
     super.key,
     this.contentPadding,
     this.focusedBorder,

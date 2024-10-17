@@ -9,8 +9,14 @@ import '../../../../../core/widgets/app_button.dart';
 import '../manager/register_cubit.dart';
 import '../widgets/register_form.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final cubit = RegisterCubit(sl());
 
   @override
