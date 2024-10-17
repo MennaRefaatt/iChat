@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iChat/features/chat/chats_screen.dart';
 import 'package:iChat/core/routing/routing_endpoints.dart';
 import 'package:iChat/features/splash.dart';
 import 'package:iChat/features/video/video_call_screen.dart';
 import '../../features/authentication/login/presentation/screen/login_screen.dart';
 import '../../features/authentication/register/presentation/screen/register_screen.dart';
+import '../../features/chat_module/chat/presentation/screen/chat_screen.dart';
+import '../../features/chat_module/chats_screen.dart';
 import '../../features/manager/video_call_cubit.dart';
 import '../service/agora_service.dart';
 import '../utils/safe_print.dart';
@@ -33,6 +34,9 @@ class RouteServices {
 
       case RoutingEndpoints.chats:
         return MaterialPageRoute(builder: (_) => const ChatsScreen());
+
+        case RoutingEndpoints.chat:
+        return MaterialPageRoute(builder: (_) => const ChatScreen());
 
       case RoutingEndpoints.videoCall:
         return MaterialPageRoute(builder: (_) =>BlocProvider(

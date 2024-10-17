@@ -7,8 +7,13 @@ class AppButton extends StatelessWidget {
     required this.backgroundColor,
     required this.onPressed,
     required this.textStyle,
+    this.width,
+    this.height,
+    this.borderRadius
   });
-
+final double? width;
+  final double? height;
+  final double? borderRadius;
   final String text;
   final Color backgroundColor;
   final VoidCallback onPressed;
@@ -18,14 +23,14 @@ class AppButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(8.sp),
       child: SizedBox(
-        width: double.infinity,
-        height: 60.h,
+        width: width??double.infinity,
+        height: height??60.h,
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: backgroundColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.sp),
+              borderRadius: BorderRadius.circular(borderRadius??15.sp),
             ),
           ),
           child: Text(

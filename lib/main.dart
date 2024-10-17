@@ -2,9 +2,9 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iChat/core/shared_preferences/my_shared.dart';
 import 'core/di/di.dart';
 import 'core/routing/router.dart';
+import 'core/shared_preferences/my_shared.dart';
 import 'firebase_options.dart';
 
 void main()async {
@@ -15,7 +15,7 @@ void main()async {
   SharedPref.init();
   await init();
   runApp(
-    MyApp(),
+    const MyApp(),
   );
 }
 final appNavKey = GlobalKey<NavigatorState>();
