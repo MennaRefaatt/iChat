@@ -17,7 +17,6 @@ void main() {
     MyApp(agoraService: agoraService),
   );
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.agoraService});
 
