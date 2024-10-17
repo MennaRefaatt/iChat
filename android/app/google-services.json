@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "383282656904",
+    "project_id": "ichat-95e95",
+    "storage_bucket": "ichat-95e95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383282656904:android:a1c08b4b8784042d9ad13d",
+        "android_client_info": {
+          "package_name": "com.ichat.ichat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnqvQRG2CPSQEWwJjoc7jDpUCSKsBHs8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
