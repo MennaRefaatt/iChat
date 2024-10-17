@@ -28,10 +28,10 @@ class LoginScreen extends StatelessWidget {
               verticalSpacing(150.h),
               Center(
                 child: Text(
-                  "signInToEShop",
+                  "Login to iChat",
                   style: TextStyle(
                       fontSize: 25.sp,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w300,
                       color: AppColors.primary),
                 ),
               ),
@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {},
-                  child: Text("forgotPassword",
+                  child: Text("Forgot Password?",
                       style: TextStyle(
                           color: AppColors.primary,
                           decoration: TextDecoration.underline,
@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
               BlocBuilder<LoginCubit, LoginState>(
                 builder: (context, state) {
                   if (state is LoginSuccess) {
-                     Router.navigate(context, RoutingEndpoints.chat as VoidCallback);
+                   pushReplacement(context, RoutingEndpoints.chats as Widget);
                   }
                   if (state is LoginLoading) {
                     return const Center(
@@ -62,6 +62,8 @@ class LoginScreen extends StatelessWidget {
                     ));
                   } else {
                     return AppButton(
+                      width: 100.w,
+                      borderRadius: 30,
                       backgroundColor: AppColors.primary,
                       onPressed: () {
                         safePrint("clicked");
@@ -70,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                           cubit.login();
                         }
                       },
-                      text: "signIn",
+                      text: "Login",
                       textStyle: TextStyle(
                         color: Colors.white,
                         fontSize: 20.sp,
@@ -83,7 +85,7 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("dontHaveAnAccount",
+                  Text("Don\'t Have An Account?",
                       style: TextStyle(
                           color: AppColors.greyBorder,
                           fontSize: 15.sp,
@@ -93,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                         pushNamed(context, RoutingEndpoints.register);
                       },
                       child: Text(
-                        "signUp",
+                        "Sign Up",
                         style: TextStyle(
                             color: AppColors.primary,
                             fontSize: 15.sp,

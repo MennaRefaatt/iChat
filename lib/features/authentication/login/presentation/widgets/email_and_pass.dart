@@ -34,7 +34,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.error),
-              backgroundColor: Colors.red[900],
+              backgroundColor: AppColors.red,
             ),
           );
         }

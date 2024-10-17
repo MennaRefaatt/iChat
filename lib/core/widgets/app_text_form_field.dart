@@ -29,7 +29,7 @@ class AppTextFormField extends StatefulWidget {
   final bool? enable;
   // late FocusNode? focusNode;
   final Color? borderColor;
-   AppTextFormField({
+   const AppTextFormField({
     super.key,
     this.contentPadding,
     this.focusedBorder,
