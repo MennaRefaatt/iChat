@@ -45,6 +45,7 @@ class AgoraService {
     required Function(int) onUserOffline,
     required Function(int) onJoinChannelSuccess,
   }) {
+
     _engine.registerEventHandler(
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
