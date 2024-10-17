@@ -1,7 +1,7 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iChat/manager/video_call_cubit.dart';
+import '../manager/video_call_cubit.dart';
 
 class VideoCallScreen extends StatelessWidget {
   const VideoCallScreen({super.key});

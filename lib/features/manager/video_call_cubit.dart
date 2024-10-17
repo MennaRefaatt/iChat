@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import '../core/service/agora_service.dart';
+
+import '../../core/service/agora_service.dart';
 
 part 'video_call_state.dart';
 

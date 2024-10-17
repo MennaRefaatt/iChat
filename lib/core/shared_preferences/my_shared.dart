@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'my_shared_keys.dart';
 
-class MyShared {
+class SharedPref {
   static SharedPreferences? _preferences;
 
   static Future<void> init() async {
