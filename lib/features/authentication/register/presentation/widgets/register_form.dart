@@ -33,9 +33,9 @@ class _RegisterFormState extends State<RegisterForm> {
           );
         } else if (state is RegisterSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+             const SnackBar(
               backgroundColor: AppColors.green,
-              content: Text('register',),
+              content: Text("Register Success"),
             ),
           );
 
@@ -65,7 +65,6 @@ class _RegisterFormState extends State<RegisterForm> {
               validator: (value) =>
                   widget.cubit.userDataFormValidators.validateName(value),
             ),
-            verticalSpacing(15.h),
             verticalSpacing(15.h),
             AppTextFormField(
               textInputAction: TextInputAction.next,

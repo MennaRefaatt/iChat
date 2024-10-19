@@ -8,7 +8,7 @@ final class RegisterInitial extends RegisterState {}
 final class RegisterLoadingState extends RegisterState {}
 
 final class RegisterSuccessState extends RegisterState {
-  final RegisterData registerData;
+  final bool registerData;
 
   RegisterSuccessState(this.registerData);
 }

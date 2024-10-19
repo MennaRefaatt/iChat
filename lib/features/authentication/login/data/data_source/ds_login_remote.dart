@@ -32,7 +32,7 @@ class DSLoginRemoteImpl implements DSLoginRemote {
       userId: uid,
       email: userDoc['email'],
       name: userDoc['name'],
-      token: userDoc['token'],
+      token: uid,
     );
   }
 

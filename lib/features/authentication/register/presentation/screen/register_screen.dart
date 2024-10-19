@@ -9,8 +9,14 @@ import '../../../../../core/widgets/app_button.dart';
 import '../manager/register_cubit.dart';
 import '../widgets/register_form.dart';
 
-class RegisterScreen extends StatelessWidget {
-  RegisterScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final cubit = RegisterCubit(sl());
 
   @override
@@ -24,7 +30,7 @@ class RegisterScreen extends StatelessWidget {
             verticalSpacing(150.h),
             Center(
               child: Text(
-               "signUp",
+               "SignUp",
                 style: TextStyle(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.bold,
@@ -39,7 +45,6 @@ class RegisterScreen extends StatelessWidget {
                   return const Center(
                       child: CircularProgressIndicator(
                     color: AppColors.primary,
-                    backgroundColor: Colors.white70,
                   ));
                 } else {
                   return AppButton(
@@ -50,7 +55,7 @@ class RegisterScreen extends StatelessWidget {
                         cubit.register();
                       }
                     },
-                    text: "register",
+                    text: "SignUp",
                     textStyle: const TextStyle(color: AppColors.primaryLight),
                   );
                 }
@@ -61,7 +66,7 @@ class RegisterScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'iAlreadyHaveAnAccount',
+                  'I Already Have An Account',
                   style: TextStyle(
                       color: AppColors.greyBorder,
                       fontSize: 15.sp,
@@ -72,7 +77,7 @@ class RegisterScreen extends StatelessWidget {
                       pop(context);
                     },
                     child: Text(
-                      'signIn',
+                      'Login',
                       style: TextStyle(
                           color: AppColors.primary,
                           fontSize: 15.sp,
