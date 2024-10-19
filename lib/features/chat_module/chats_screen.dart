@@ -18,7 +18,7 @@ class ChatsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-             DefaultAppBar(text: "Chats", backArrow: false),
+             DefaultAppBar(text: "Chats", backArrow: false, videoCallIcon: false, audioCallIcon: false,),
             Container(
               margin: EdgeInsets.all(8.sp),
               child: ListView.builder(

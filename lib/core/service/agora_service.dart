@@ -1,68 +1,80 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:iChat/core/utils/safe_print.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../features/video/constants/agora_constants.dart';
 
 class AgoraService {
-  final String appId;
-  final String token;
-  final String channelName;
-  late RtcEngine _engine;
+  late RtcEngine engine;
 
-  AgoraService({required this.appId, required this.token, required this.channelName});
-
-  Future<void> init() async {
-    // Request permissions
+  Future<void> initialize() async {
     await [Permission.microphone, Permission.camera].request();
 
-    // Initialize the engine
-    _engine = createAgoraRtcEngine();
-    await _engine.initialize(RtcEngineContext(
-      appId: appId,
-      channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
-    ));
-
-    await _engine.enableVideo();
-    await _engine.startPreview();
+    engine = createAgoraRtcEngine();
+    await engine.initialize(
+      const RtcEngineContext(
+        appId: AgoraConstants.appId,
+        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+      ),
+    );
+    await engine.enableVideo();
+    await engine.startPreview();
   }
 
-  // Add a getter for the Agora engine
-  RtcEngine get engine => _engine;
-
-  Future<void> joinChannel() async {
-    await _engine.joinChannel(
-      token: token,
-      channelId: channelName,
-      uid: 0,
-      options: const ChannelMediaOptions(),
-    );
+  Future<void> joinChannel(String token, String channelName, int uid) async {
+    try {
+      await engine.joinChannel(
+        token: token,
+        channelId: channelName,
+        uid: uid,
+        options: const ChannelMediaOptions(),
+      );
+    } on AgoraRtcException catch (e) {
+      safePrint("Error joining channel: ${e.code}, ${e.message}");
+      rethrow;
+    }
   }
 
   Future<void> leaveChannel() async {
-    await _engine.leaveChannel();
+    try {
+      await engine.leaveChannel();
+    } catch (e) {
+      safePrint("Error leaving channel: $e");
+    }
+  }
+
+  Future<void> enableVideo() async {
+    await engine.enableVideo();
+  }
+
+  Future<void> disableVideo() async {
+    await engine.disableVideo();
+  }
+
+  Future<void> dispose() async {
+    await engine.leaveChannel();
+    await engine.release();
   }
 
   void setEventHandler({
+    required Function(int) onJoinChannelSuccess,
     required Function(int) onUserJoined,
     required Function(int) onUserOffline,
-    required Function(int) onJoinChannelSuccess,
   }) {
-
-    _engine.registerEventHandler(
+    engine.registerEventHandler(
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+          safePrint("Local user ${connection.localUid} joined the channel.");
           onJoinChannelSuccess(connection.localUid!);
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
+          safePrint("Remote user $remoteUid joined the channel.");
           onUserJoined(remoteUid);
         },
         onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
+          safePrint("Remote user $remoteUid left the channel.");
           onUserOffline(remoteUid);
         },
       ),
     );
-  }
-
-  Future<void> dispose() async {
-    await _engine.leaveChannel();
-    await _engine.release();
   }
 }

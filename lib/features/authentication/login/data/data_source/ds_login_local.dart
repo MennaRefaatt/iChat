@@ -1,4 +1,5 @@
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:iChat/features/authentication/login/data/models/login_data.dart';
 import '../../../../../core/secure_storage/secure_keys.dart';
 import '../../../../../core/secure_storage/secure_storage.dart';
@@ -10,7 +11,7 @@ abstract class DSLoginLocal {
 
   Future<void> saveDataToLocal({required LoginData loginData});
 
-  Future<LoginData?> getCachedUser();
+  Future<void> getCachedUser();
 
   Future<void> clear();
 }
@@ -31,12 +32,11 @@ class DSLoginLocalImpl implements DSLoginLocal {
   }
 
   @override
-  Future<LoginData?> getCachedUser() async {
+  Future<void> getCachedUser() async {
    SharedPref.getString(key: MySharedKeys.phone);
    SharedPref.getString(key: MySharedKeys.userName);
    SharedPref.getString(key: MySharedKeys.email);
    SecureStorageService.readData(SecureKeys.token);
-   return null;
 
   }
   @override
@@ -44,7 +44,9 @@ class DSLoginLocalImpl implements DSLoginLocal {
     SharedPref.putString(key: MySharedKeys.email, value: loginData.email);
     SharedPref.putString(key: MySharedKeys.userId, value: loginData.userId.toString());
     SharedPref.putString(key: MySharedKeys.userName, value: loginData.name);
-    await SecureStorageService.writeData(SecureKeys.token, loginData.token!);
-
+    String? deviceToken = await FirebaseMessaging.instance.getToken();
+    if (deviceToken != null) {
+      await SecureStorageService.writeData(SecureKeys.token, deviceToken);
+    }
   }
 }
