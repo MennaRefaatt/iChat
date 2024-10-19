@@ -17,4 +17,6 @@ class RegisterData {
   });
   factory RegisterData.fromJson(Map<String, dynamic> json) =>
       _$RegisterDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RegisterDataToJson(this);
 }

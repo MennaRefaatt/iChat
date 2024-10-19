@@ -3,5 +3,5 @@ import 'package:iChat/features/authentication/register/data/models/register_mode
 import '../entity/register_request_entity.dart';
 
 abstract class RegisterRepoBase {
-  Future<RegisterData?> register(RegisterRequestEntity registerRequestEntity);
+  Future<bool> register(RegisterRequestEntity registerRequestEntity);
 }

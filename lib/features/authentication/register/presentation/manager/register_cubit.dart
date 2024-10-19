@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:iChat/core/utils/safe_print.dart';
 import 'package:iChat/features/authentication/register/data/models/register_model.dart';
 import 'package:meta/meta.dart';
 
@@ -21,8 +22,9 @@ class RegisterCubit extends Cubit<RegisterState> {
       email: userDataFormValidators.emailController.text,
       password: userDataFormValidators.passwordController.text,
     ));
-    if(response != null) {
-      emit(RegisterSuccessState(response));
+    if(response ==true) {
+      safePrint("response => $response");
+      emit(RegisterSuccessState(true));
     }else {
       emit(RegisterErrorState(response.toString()));
     }

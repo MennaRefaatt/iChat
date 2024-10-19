@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               BlocBuilder<LoginCubit, LoginState>(
                 builder: (context, state) {
                   if (state is LoginSuccess) {
-                     Router.navigate(context, RoutingEndpoints.chat as VoidCallback);
+                   pushNamedAndRemoveUntil(context, RoutingEndpoints.chats);
                   }
                   if (state is LoginLoading) {
                     return const Center(

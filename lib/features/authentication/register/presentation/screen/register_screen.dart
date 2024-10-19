@@ -10,7 +10,7 @@ import '../manager/register_cubit.dart';
 import '../widgets/register_form.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -30,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             verticalSpacing(150.h),
             Center(
               child: Text(
-               "signUp",
+               "SignUp",
                 style: TextStyle(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.bold,
@@ -45,7 +45,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return const Center(
                       child: CircularProgressIndicator(
                     color: AppColors.primary,
-                    backgroundColor: Colors.white70,
                   ));
                 } else {
                   return AppButton(
@@ -56,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         cubit.register();
                       }
                     },
-                    text: "register",
+                    text: "SignUp",
                     textStyle: const TextStyle(color: AppColors.primaryLight),
                   );
                 }
@@ -67,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'iAlreadyHaveAnAccount',
+                  'I Already Have An Account',
                   style: TextStyle(
                       color: AppColors.greyBorder,
                       fontSize: 15.sp,
@@ -78,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       pop(context);
                     },
                     child: Text(
-                      'signIn',
+                      'Login',
                       style: TextStyle(
                           color: AppColors.primary,
                           fontSize: 15.sp,
