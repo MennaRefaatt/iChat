@@ -18,22 +18,11 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
-  late int uid;
-
   @override
   void initState() {
+    context.read<VideoCallCubit>().initializeAgora();
     super.initState();
-    uid = DateTime.now()
-        .microsecondsSinceEpoch
-        .remainder(100000);
   }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    context.read<VideoCallCubit>().initializeAgora(uid);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +55,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                                     .read<VideoCallCubit>()
                                     .agoraService
                                     .engine,
-                                canvas: VideoCanvas(uid: 0),
+                                canvas: const VideoCanvas(uid: 0),
                               ),
                             ),
                           ),
@@ -89,7 +78,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                     ],
                   ),
                 );
-              } else if (state is AgoraError) {
+              }
+              if (state is AgoraError) {
                 safePrint("Error: ${state.message}");
                 return Center(child: Text(state.message));
               }
@@ -100,7 +90,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                     backgroundColor: AppColors.green,
                     child: IconButton(
                       onPressed: () =>
-                          context.read<VideoCallCubit>().initializeAgora(uid),
+                          context.read<VideoCallCubit>().initializeAgora(),
                       icon: const Icon(CupertinoIcons.videocam,
                           color: AppColors.primaryLight),
                     ),
@@ -116,19 +106,19 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   }
 
   Widget _remoteVideo(BuildContext context, int? remoteUid) {
-    if (remoteUid != null) {
+    if (remoteUid != 0) {
       return AgoraVideoView(
         controller: VideoViewController.remote(
           rtcEngine: context.read<VideoCallCubit>().agoraService.engine,
           canvas: VideoCanvas(uid: remoteUid),
           connection: RtcConnection(
             channelId: AgoraConstants.channelName,
-            localUid: uid,
+            localUid: remoteUid,
           ),
         ),
       );
     } else {
-      return const Center(child: Text('Waiting for remote user to join'));
+      return const Center(child: Text('Calling...'));
     }
   }
 }

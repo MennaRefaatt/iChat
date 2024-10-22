@@ -12,9 +12,7 @@ class AgoraService {
     engine = createAgoraRtcEngine();
     await engine.initialize(
       const RtcEngineContext(
-        appId: AgoraConstants.appId,
-        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
-      ),
+        appId: AgoraConstants.appId),
     );
     await engine.enableVideo();
     await engine.startPreview();
@@ -40,14 +38,6 @@ class AgoraService {
     } catch (e) {
       safePrint("Error leaving channel: $e");
     }
-  }
-
-  Future<void> enableVideo() async {
-    await engine.enableVideo();
-  }
-
-  Future<void> disableVideo() async {
-    await engine.disableVideo();
   }
 
   Future<void> dispose() async {

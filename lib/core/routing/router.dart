@@ -34,7 +34,7 @@ class RouteServices {
       case RoutingEndpoints.videoCall:
         return MaterialPageRoute(builder: (_) =>
             BlocProvider(
-              create: (context) => VideoCallCubit(AgoraService()),
+              create: (_) => VideoCallCubit(AgoraService())..initializeAgora(),
               child: const VideoCallScreen(),
             ));
 
