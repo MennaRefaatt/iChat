@@ -35,7 +35,7 @@ class RouteServices {
         return MaterialPageRoute(builder: (_) =>
             BlocProvider(
               create: (context) => VideoCallCubit(AgoraService()),
-              child: VideoCallScreen(),
+              child: const VideoCallScreen(),
             ));
 
       default:

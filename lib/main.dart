@@ -21,7 +21,7 @@ void main() async {
   safePrint("userId $userId");
 
   String? deviceToken = await FirebaseMessaging.instance.getToken();
-  safePrint(deviceToken);
+  safePrint("deviceToken $deviceToken");
 
   String? token = await SecureStorageService.readData(SecureKeys.token);
   safePrint("token $token");
