@@ -1,56 +1,124 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../manager/video_call_cubit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iChat/core/styles/app_colors.dart';
+import 'package:iChat/core/utils/safe_print.dart';
+import 'package:iChat/core/widgets/app_bar.dart';
+import 'package:iChat/features/video/constants/agora_constants.dart';
+import 'manager/video_call_cubit.dart';
+import 'manager/video_call_state.dart';
 
-class VideoCallScreen extends StatelessWidget {
+class VideoCallScreen extends StatefulWidget {
   const VideoCallScreen({super.key});
 
   @override
+  State<VideoCallScreen> createState() => _VideoCallScreenState();
+}
+
+class _VideoCallScreenState extends State<VideoCallScreen> {
+  @override
+  void initState() {
+    context.read<VideoCallCubit>().initializeAgora();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Agora Video Call')),
-      body: BlocBuilder<VideoCallCubit, VideoCallState>(
-        builder: (context, state) {
-          return Stack(
-            children: [
-              Center(child: _remoteVideo(context, state)),
-              Align(
-                alignment: Alignment.topLeft,
-                child: SizedBox(
-                  width: 100,
-                  height: 150,
-                  child: Center(
-                    child: state is LocalUserJoined
-                        ? AgoraVideoView(
-                      controller: VideoViewController(
-                        rtcEngine: context.read<VideoCallCubit>().agoraService.engine,
-                        canvas: const VideoCanvas(uid: 0),
+      body: Column(
+        children: [
+          DefaultAppBar(
+            text: "Video Call",
+            backArrow: false,
+            videoCallIcon: false,
+            audioCallIcon: false,
+          ),
+          BlocBuilder<VideoCallCubit, VideoCallState>(
+            builder: (context, state) {
+              if (state is LocalUserJoined) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      _remoteVideo(context, state.remoteUid),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: SizedBox(
+                          width: 120.w,
+                          height: 120.h,
+                          child: Center(
+                            child: AgoraVideoView(
+                              controller: VideoViewController(
+                                rtcEngine: context
+                                    .read<VideoCallCubit>()
+                                    .agoraService
+                                    .engine,
+                                canvas: const VideoCanvas(uid: 0),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    )
-                        : const CircularProgressIndicator(),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CircleAvatar(
+                          backgroundColor: AppColors.red,
+                          child: IconButton(
+                            onPressed: () =>
+                                context.read<VideoCallCubit>().leaveChannel(),
+                            icon: const Icon(
+                              CupertinoIcons.phone_down,
+                              color: AppColors.greyInput,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-            ],
-          );
-        },
+                );
+              }
+              if (state is AgoraError) {
+                safePrint("Error: ${state.message}");
+                return Center(child: Text(state.message));
+              }
+              if (state is LocalUserLeft || state is RemoteUserLeft) {
+                return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CircleAvatar(
+                    backgroundColor: AppColors.green,
+                    child: IconButton(
+                      onPressed: () =>
+                          context.read<VideoCallCubit>().initializeAgora(),
+                      icon: const Icon(CupertinoIcons.videocam,
+                          color: AppColors.primaryLight),
+                    ),
+                  ),
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
+        ],
       ),
     );
   }
 
-  // Display remote user's video
-  Widget _remoteVideo(BuildContext context, VideoCallState state) {
-    if (state is RemoteUserJoined) {
+  Widget _remoteVideo(BuildContext context, int? remoteUid) {
+    if (remoteUid != 0) {
       return AgoraVideoView(
         controller: VideoViewController.remote(
           rtcEngine: context.read<VideoCallCubit>().agoraService.engine,
-          canvas: VideoCanvas(uid: state.remoteUid),
-          connection: const RtcConnection(channelId: 'iChat'),
+          canvas: VideoCanvas(uid: remoteUid),
+          connection: RtcConnection(
+            channelId: AgoraConstants.channelName,
+            localUid: remoteUid,
+          ),
         ),
       );
     } else {
-      return const Text('Waiting for remote user to join', textAlign: TextAlign.center);
+      return const Center(child: Text('Calling...'));
     }
   }
 }

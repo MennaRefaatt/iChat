@@ -51,8 +51,8 @@ class SharedPref {
   static int? getInt({required MySharedKeys key}) {
     return _preferences?.getInt(key.name) ;
   }
-  static String getString({required MySharedKeys key}) {
-    return _preferences?.getString(key.name) ?? "";
+  static String? getString({required MySharedKeys key}) {
+    return _preferences?.getString(key.name);
   }
 
   static String getCurrentLanguage() {
