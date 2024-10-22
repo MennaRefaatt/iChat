@@ -38,7 +38,6 @@ class _RegisterFormState extends State<RegisterForm> {
               content: Text("Register Success"),
             ),
           );
-
           pop(context);
         }
         if (state is RegisterErrorState) {

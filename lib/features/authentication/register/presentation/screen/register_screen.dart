@@ -30,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             verticalSpacing(150.h),
             Center(
               child: Text(
-               "SignUp",
+                "SignUp",
                 style: TextStyle(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.bold,
@@ -48,6 +48,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ));
                 } else {
                   return AppButton(
+                    width: 120.w,
+                    borderRadius: 30,
                     backgroundColor: AppColors.primary,
                     onPressed: () {
                       if (cubit.userDataFormValidators.formKey.currentState!
@@ -55,13 +57,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         cubit.register();
                       }
                     },
-                    text: "SignUp",
-                    textStyle: const TextStyle(color: AppColors.primaryLight),
+                    text: "Sign Up",
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.sp,
+                    ),
                   );
                 }
               },
             ),
-            verticalSpacing(20.h),
+            verticalSpacing(10.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

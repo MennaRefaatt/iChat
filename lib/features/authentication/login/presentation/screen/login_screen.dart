@@ -56,9 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               BlocBuilder<LoginCubit, LoginState>(
                 builder: (context, state) {
-                  if (state is LoginSuccess) {
-                   pushNamedAndRemoveUntil(context, RoutingEndpoints.chats);
-                  }
                   if (state is LoginLoading) {
                     return const Center(
                         child: CircularProgressIndicator(
@@ -90,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don\'t Have An Account?",
+                  Text("Don't Have An Account?",
                       style: TextStyle(
                           color: AppColors.greyBorder,
                           fontSize: 15.sp,

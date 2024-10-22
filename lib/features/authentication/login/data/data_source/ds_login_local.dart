@@ -37,8 +37,8 @@ class DSLoginLocalImpl implements DSLoginLocal {
    SharedPref.getString(key: MySharedKeys.userName);
    SharedPref.getString(key: MySharedKeys.email);
    SecureStorageService.readData(SecureKeys.token);
-
   }
+
   @override
   Future<void> saveDataToLocal({required LoginData loginData}) async {
     SharedPref.putString(key: MySharedKeys.email, value: loginData.email);
