@@ -1,34 +1,22 @@
-import 'package:meta/meta.dart';
+part of 'video_call_cubit.dart';
 
 @immutable
 abstract class VideoCallState {}
 
-final class VideoCallInitial extends VideoCallState {}
+class VideoCallInitial extends VideoCallState {}
 
-final class LocalUserJoined extends VideoCallState {
-  final bool localUserJoined;
-  final int? remoteUid;
+class VideoCallSuccess extends VideoCallState {}
 
-  LocalUserJoined({this.localUserJoined = false, this.remoteUid});
-}
-
-final class RemoteUserJoined extends VideoCallState {
-  final int remoteUid;
-  final bool localUserJoined;
-
-  RemoteUserJoined({required this.remoteUid, this.localUserJoined = false});
-}
-
-final class RemoteUserLeft extends VideoCallState {
-  final int remoteUid;
-
-  RemoteUserLeft(this.remoteUid);
-}
-
-final class LocalUserLeft extends VideoCallState {}
-
-final class AgoraError extends VideoCallState {
+class VideoCallError extends VideoCallState {
   final String message;
-
-  AgoraError(this.message);
+  VideoCallError(this.message);
 }
+
+class VideoCallUserJoined extends VideoCallState {
+  final int remoteUid;
+  VideoCallUserJoined(this.remoteUid);
+}
+
+class VideoCallUserLeft extends VideoCallState {}
+
+class VideoCallEnd extends VideoCallState {}

@@ -31,13 +31,11 @@ class DSLoginRemoteImpl implements DSLoginRemote {
     DocumentSnapshot userDoc =
         await _firestore.collection('users').doc(uid).get();
     if (!userDoc.exists) return null;
-    // String? token = await _auth.currentUser?.getIdToken();
-    String? token = await FirebaseMessaging.instance.getToken();
     return LoginData(
       userId: userDoc['userId'],
       email: userDoc['email'],
       name: userDoc['name'],
-      token: token,
+      token: userDoc['token'],
     );
   }
   Future<void> updateToken() async {

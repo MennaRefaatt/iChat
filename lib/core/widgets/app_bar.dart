@@ -68,7 +68,7 @@ class DefaultAppBar extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       pushNamed(context, RoutingEndpoints.videoCall);
-                      context.read<VideoCallCubit>().initializeAgora();
+                      context.read<VideoCallCubit>();
                     },
                     icon: const Icon(CupertinoIcons.videocam),
                   ),
