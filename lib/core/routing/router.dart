@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iChat/core/routing/routing_endpoints.dart';
+import 'package:iChat/features/audio/audio_call_screen.dart';
 import 'package:iChat/features/splash.dart';
 import 'package:iChat/features/video/video_call_screen.dart';
 import '../../features/authentication/login/presentation/screen/login_screen.dart';
@@ -31,14 +32,15 @@ class RouteServices {
       case RoutingEndpoints.chat:
         return MaterialPageRoute(builder: (_) => const ChatScreen());
 
-      // case RoutingEndpoints.videoCall:
-      //   return MaterialPageRoute(builder: (_) =>VideoCallScreen(),);
       case RoutingEndpoints.videoCall:
-        return MaterialPageRoute(builder: (_) =>
-            BlocProvider(
-              create: (_) => VideoCallCubit(),
-              child: const VideoCallScreen(),
-            ));
+        return MaterialPageRoute(
+          builder: (_) => const VideoCallScreen()
+        );
+
+        case RoutingEndpoints.audioCall:
+        return MaterialPageRoute(
+          builder: (_) => const AudioCallScreen()
+        );
 
       default:
         return _errorRoute();

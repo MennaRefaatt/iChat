@@ -5,4 +5,5 @@ static const String register = '/register';
 static const String chats = '/chats';
 static const String chat = '/chat';
 static const String videoCall = '/videoCall';
+static const String audioCall = '/audioCall';
 }

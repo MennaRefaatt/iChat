@@ -62,7 +62,9 @@ class DefaultAppBar extends StatelessWidget {
               ? const SizedBox()
               : Row(children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      pushNamed(context, RoutingEndpoints.audioCall);
+                    },
                     icon: const Icon(CupertinoIcons.phone),
                   ),
                   IconButton(
