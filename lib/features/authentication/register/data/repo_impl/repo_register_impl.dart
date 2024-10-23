@@ -1,4 +1,3 @@
-
 import 'package:iChat/core/utils/safe_print.dart';
 
 import '../../domain/entity/register_request_entity.dart';
@@ -12,13 +11,16 @@ class RegisterRepoImpl implements RegisterRepoBase {
     required this.remoteDataSource,
   });
   @override
-  Future<bool> register(
-      RegisterRequestEntity registerRequestEntity) async {
-    final response = await remoteDataSource.register(registerRequestEntity);
-    if (response ==true) {
-      safePrint("response => $response");
+  Future<bool> register(RegisterRequestEntity registerRequestEntity) async {
+    try {
+      final response = await remoteDataSource.register(registerRequestEntity);
+      if (response == true) {
+        safePrint("response => $response");
+        return response;
+      }
       return response;
+    } catch (error) {
+      rethrow;
     }
-    return response;
   }
 }

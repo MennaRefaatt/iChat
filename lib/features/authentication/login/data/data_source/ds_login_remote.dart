@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
+import 'package:iChat/core/utils/safe_print.dart';
 import '../../domain/entities/login_request_entity.dart';
 import '../models/login_data.dart';
 
@@ -19,12 +19,10 @@ class DSLoginRemoteImpl implements DSLoginRemote {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: loginRequestEntity.email,
           password: loginRequestEntity.password);
-      // if (userData != null) {
-      //   await saveUserData(userData);
-      // }
-      return _getUserData(userCredential.user?.uid);;
+      await updateToken();
+      return _getUserData(userCredential.user?.uid);
     } catch (error) {
-      throw Exception('Login failed');
+      rethrow;
     }
   }
 
@@ -32,22 +30,25 @@ class DSLoginRemoteImpl implements DSLoginRemote {
     if (uid == null) return null;
     DocumentSnapshot userDoc =
         await _firestore.collection('users').doc(uid).get();
-
     if (!userDoc.exists) return null;
+    // String? token = await _auth.currentUser?.getIdToken();
+    String? token = await FirebaseMessaging.instance.getToken();
     return LoginData(
-      userId: uid,
+      userId: userDoc['userId'],
       email: userDoc['email'],
       name: userDoc['name'],
-      token: FirebaseMessaging.instance.getToken().toString(),
+      token: token,
     );
   }
-
-  Future<void> saveUserData(LoginData user) async {
-    await _firestore.collection('users').doc(user.userId).set({
-      'email': user.email,
-      'userId': user.userId,
-      'name': user.name,
-      'token': user.token,
-    }, SetOptions(merge: true));
+  Future<void> updateToken() async {
+    try {
+      // String? token = await _auth.currentUser?.getIdToken(true);
+      String? token = await FirebaseMessaging.instance.getToken();
+      await _firestore.collection('users').doc(_auth.currentUser?.uid).update({
+        'token': token
+      });
+    } catch (error) {
+      safePrint("Failed to update token: $error");
+    }
   }
 }

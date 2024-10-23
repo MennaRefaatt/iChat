@@ -21,14 +21,21 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
+        if (state is LoginLoading) {
+          const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.primary,
+            ),
+          );
+        }
         if (state is LoginSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.loginData as String),
+            const SnackBar(
+              content: Text("Login Success"),
               backgroundColor: AppColors.green,
             ),
           );
-          pushNamed(context, RoutingEndpoints.chats);
+          pushNamedAndRemoveUntil(context, RoutingEndpoints.chats);
         }
         if (state is LoginError) {
           ScaffoldMessenger.of(context).showSnackBar(
