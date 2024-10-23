@@ -4,7 +4,7 @@ part 'login_data.g.dart';
 
 @JsonSerializable()
 class LoginData {
-  String? userId;
+  int? userId;
   String? name;
   String? email;
   String? token;
