@@ -31,10 +31,12 @@ class RouteServices {
       case RoutingEndpoints.chat:
         return MaterialPageRoute(builder: (_) => const ChatScreen());
 
+      // case RoutingEndpoints.videoCall:
+      //   return MaterialPageRoute(builder: (_) =>VideoCallScreen(),);
       case RoutingEndpoints.videoCall:
         return MaterialPageRoute(builder: (_) =>
             BlocProvider(
-              create: (_) => VideoCallCubit(AgoraService())..initializeAgora(),
+              create: (_) => VideoCallCubit(),
               child: const VideoCallScreen(),
             ));
 

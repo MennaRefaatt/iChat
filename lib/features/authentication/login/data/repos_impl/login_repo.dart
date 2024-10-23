@@ -1,5 +1,3 @@
-import 'package:iChat/core/utils/safe_print.dart';
-
 import '../../domain/repo_base/login_repo_base.dart';
 import '../data_source/ds_login_local.dart';
 import '../data_source/ds_login_remote.dart';
@@ -19,9 +17,10 @@ class LoginRepoImpl implements LoginRepoBase {
   Future<LoginData?> login(LoginRequestEntity loginRequestEntity) async {
     try {
       final user = await remoteDataSource.login(loginRequestEntity);
-      if (user != null) {
-        await localDataSource.cacheUserToken(user.token!);
-        await localDataSource.saveDataToLocal(loginData: user);
+      // await localDataSource.saveDataToLocal(loginData: user!);
+      // await localDataSource.getCachedUser();
+       if (user?.token != null) {
+        await localDataSource.saveDataToLocal(loginData: user!);
       }
       return user;
     } catch (error) {
