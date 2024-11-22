@@ -1,5 +1,6 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -8,11 +9,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iChat/core/secure_storage/secure_storage.dart';
 import 'package:iChat/core/utils/safe_print.dart';
+import 'package:iChat/features/chat_module/chats_screen.dart';
 import 'core/di/di.dart';
 import 'core/routing/router.dart';
 import 'core/secure_storage/secure_keys.dart';
 import 'core/shared_preferences/my_shared.dart';
 import 'core/shared_preferences/my_shared_keys.dart';
+import 'features/authentication/login/presentation/screen/login_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -172,32 +175,49 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         builder: (BuildContext context, Widget? child) {
           return MaterialApp(
-              navigatorKey: appNavKey,
-              onGenerateRoute: RouteServices.generateRoute,
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              initialRoute: '/',
-              // home: Scaffold(
-              //     appBar: AppBar(
-              //       title: Text('Device Info Example'),
-              //     ),
-              //     body: Center(
-              //         child: ListView(
-              //       children: _deviceData.keys.map((String property) {
-              //         return Row(
-              //           children: [
-              //             Expanded(child: Text(property)),
-              //             Expanded(
-              //               child: Text(
-              //                 '${_deviceData[property]}',
-              //                 overflow: TextOverflow.ellipsis,
-              //               ),
-              //             ),
-              //           ],
-              //         );
-              //       }).toList(),
-              //     ))) // Set the initial route
-              );
+            navigatorKey: appNavKey,
+            onGenerateRoute: RouteServices.generateRoute,
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            initialRoute: '/',
+            home: StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                // Handle loading state and user state
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                // If user is logged in, navigate to the home screen
+                if (snapshot.hasData) {
+                  return const ChatsScreen(); // Replace with your home screen widget
+                } else {
+                  return LoginScreen(); // Replace with your login screen widget
+                }
+              },
+            ),
+            // home: LoginScreen(),
+            // home: Scaffold(
+            //     appBar: AppBar(
+            //       title: Text('Device Info Example'),
+            //     ),
+            //     body: Center(
+            //         child: ListView(
+            //       children: _deviceData.keys.map((String property) {
+            //         return Row(
+            //           children: [
+            //             Expanded(child: Text(property)),
+            //             Expanded(
+            //               child: Text(
+            //                 '${_deviceData[property]}',
+            //                 overflow: TextOverflow.ellipsis,
+            //               ),
+            //             ),
+            //           ],
+            //         );
+            //       }).toList(),
+            //     ))) // Set the initial route
+          );
         },
       ),
     );

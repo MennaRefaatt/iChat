@@ -24,7 +24,8 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     _socketService.initSocket();
-    chatCubit = ChatCubit(_socketService);
+    const String roomId = ":1";
+    chatCubit = ChatCubit(_socketService,roomId);
     chatCubit.fetchMessages();
     chatCubit.stream.listen((state) {
       if (state is ChatMessagesLoaded) {
@@ -36,7 +37,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void dispose() {
     _socketService.dispose();
-    chatCubit.messageController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
