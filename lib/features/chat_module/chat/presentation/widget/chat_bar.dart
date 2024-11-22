@@ -54,9 +54,10 @@ class ChatBar extends StatelessWidget {
                 chatCubit.sendMessage(
                   message: MessageReq(
                     message: trimmedMessage,
-                    id: SharedPref.getString(key: MySharedKeys.userId)
+                    id: SharedPref.getInt(key: MySharedKeys.userId)
                         .toString(),
-                    createdAt: formattedTime, // Include the current timestamp
+                    createdAt: formattedTime,
+                    roomId: chatCubit.roomId, // Include the current timestamp
                   ),
                 );
                 chatCubit.messageController.clear();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iChat/core/routing/routing_endpoints.dart';
 import 'package:iChat/features/audio/audio_call_screen.dart';
 import 'package:iChat/features/splash.dart';
@@ -7,9 +6,8 @@ import 'package:iChat/features/video/video_call_screen.dart';
 import '../../features/authentication/login/presentation/screen/login_screen.dart';
 import '../../features/authentication/register/presentation/screen/register_screen.dart';
 import '../../features/chat_module/chat/presentation/screen/chat_screen.dart';
-import '../../features/chat_module/chats_screen.dart';
-import '../../features/video/manager/video_call_cubit.dart';
-import '../service/agora_service.dart';
+import '../../features/chat_module/chats/model/chat_data.dart';
+import '../../features/chat_module/chats/presentation/screen/chats_screen.dart';
 import '../utils/safe_print.dart';
 
 class RouteServices {
@@ -30,7 +28,11 @@ class RouteServices {
         return MaterialPageRoute(builder: (_) => const ChatsScreen());
 
       case RoutingEndpoints.chat:
-        return MaterialPageRoute(builder: (_) => const ChatScreen());
+        return MaterialPageRoute(builder: (_) {
+          final chatData = routeSettings.arguments as ChatData; // Get ChatData
+          final roomId = chatData.roomId;
+          return  ChatScreen(roomId: roomId,);
+        });
 
       case RoutingEndpoints.videoCall:
         return MaterialPageRoute(

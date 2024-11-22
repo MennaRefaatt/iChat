@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/shared_preferences/my_shared.dart';
-import '../../../../../core/shared_preferences/my_shared_keys.dart';
 import '../../../../../core/styles/app_colors.dart';
 import '../../../../../core/widgets/app_bar.dart';
 import '../../core/service/socket_service.dart';
@@ -9,7 +7,9 @@ import '../widget/chat_bar.dart';
 import '../widget/chat_content.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  final String roomId;
+
+  const ChatScreen({super.key, required this.roomId});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -24,8 +24,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     _socketService.initSocket();
-    const String roomId = ":1";
-    chatCubit = ChatCubit(_socketService,roomId);
+    chatCubit = ChatCubit(_socketService, widget.roomId); // Using roomId passed from the constructor
     chatCubit.fetchMessages();
     chatCubit.stream.listen((state) {
       if (state is ChatMessagesLoaded) {
@@ -56,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           DefaultAppBar(
-            text: SharedPref.getString(key: MySharedKeys.userName).toString(),
+            text: "",
             audioCallIcon: true,
             videoCallIcon: true,
             backArrow: true,

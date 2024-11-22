@@ -30,7 +30,7 @@ class ChatContent extends StatelessWidget {
               itemBuilder: (context, index) {
                 final message = messages[index];
                 final isCurrentUser =
-                    SharedPref.getString(key: MySharedKeys.userId).toString() ==
+                    SharedPref.getInt(key: MySharedKeys.userId) ==
                         message.userId;
 
                 DateTime messageTime = DateTime.parse(message.createdAt);

@@ -10,6 +10,7 @@ MessageReq _$MessageReqFromJson(Map<String, dynamic> json) => MessageReq(
       message: json['message'] as String,
       id: json['userId'] as String,
       createdAt: json['createdAt'] as String,
+      roomId: json['roomId'] as String,
     );
 
 Map<String, dynamic> _$MessageReqToJson(MessageReq instance) =>
@@ -17,4 +18,5 @@ Map<String, dynamic> _$MessageReqToJson(MessageReq instance) =>
       'message': instance.message,
       'createdAt': instance.createdAt,
       'userId': instance.id,
+      'roomId': instance.roomId,
     };

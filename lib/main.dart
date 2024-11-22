@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iChat/core/secure_storage/secure_storage.dart';
 import 'package:iChat/core/utils/safe_print.dart';
-import 'package:iChat/features/chat_module/chats_screen.dart';
+import 'package:iChat/features/chat_module/chats/presentation/screen/chats_screen.dart';
 import 'core/di/di.dart';
 import 'core/routing/router.dart';
 import 'core/secure_storage/secure_keys.dart';
@@ -192,7 +192,7 @@ class _MyAppState extends State<MyApp> {
                 if (snapshot.hasData) {
                   return const ChatsScreen(); // Replace with your home screen widget
                 } else {
-                  return LoginScreen(); // Replace with your login screen widget
+                  return const LoginScreen(); // Replace with your login screen widget
                 }
               },
             ),
