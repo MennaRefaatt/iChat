@@ -10,6 +10,7 @@ class MessageModel {
   final String roomId;
   final String userName;
   final String userImage;
+   bool isRead;
 
   MessageModel({
     required this.userId,
@@ -19,6 +20,7 @@ class MessageModel {
     required this.roomId,
     required this.userName,
     required this.userImage,
+    required this.isRead,
   });
 
   // Factory constructor to create a MessageModel instance from JSON

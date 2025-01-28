@@ -3,13 +3,13 @@ part 'chat_data.g.dart';
 @JsonSerializable()
 class ChatData {
   final String message;
-  final String createdAt; // Changed from 'time' to match 'createdAt'
+  final String createdAt;
   final String userId;
   final String userName;
   final String userImage;
   final String roomId;
-  bool isRead; // Track if the chat is read
-  late final int unreadCount; // Track the number of unread messages
+  bool isRead;
+   int? unreadCount;
 
   ChatData({
     required this.message,
@@ -19,7 +19,7 @@ class ChatData {
     required this.userImage,
     this.isRead = false,
     this.unreadCount = 0,
-    required this.roomId, // Default is 0 unread messages
+    required this.roomId,
   });
 
   // Factory constructor to create a ChatData instance from JSON

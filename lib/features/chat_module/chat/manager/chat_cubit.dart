@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:iChat/core/utils/safe_print.dart';
 import 'package:meta/meta.dart';
 import '../core/service/socket_constants.dart';
 import '../core/service/socket_service.dart';
@@ -22,7 +23,13 @@ class ChatCubit extends Cubit<ChatState> {
     });
     fetchMessages();
   }
-
+  void markMessageAsRead(String messageId) {
+    final message = messages.firstWhere((msg) => msg.id == messageId);
+    if (message != null && !message.isRead) {
+      message.isRead = true;
+      emit(ChatMessagesLoaded(List.from(messages)));
+    }
+  }
   Future<void> fetchMessages() async {
     emit(ChatLoading());
     try {

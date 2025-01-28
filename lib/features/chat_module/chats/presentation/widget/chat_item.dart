@@ -25,7 +25,7 @@ class _ChatItemState extends State<ChatItem> {
       onTap: () {
         widget.onTap();
         setState(() {
-          widget.chatData.unreadCount++; // Increment the unread count
+          widget.chatData.unreadCount = (widget.chatData.unreadCount ?? 0) + 1; // Safely increment
         });
       },
       child: Container(
@@ -64,7 +64,7 @@ class _ChatItemState extends State<ChatItem> {
                           widget.chatData.isRead ? Colors.grey : Colors.green),
                 ),
                 verticalSpacing(10.h),
-                if (widget.chatData.unreadCount >
+                if (widget.chatData.unreadCount! >
                     0) // Only show unread count if it's greater than 0
                   Padding(
                     padding: EdgeInsets.only(left: 10.w),

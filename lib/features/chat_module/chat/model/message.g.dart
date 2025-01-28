@@ -14,6 +14,7 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) => MessageModel(
       roomId: json['roomId'] as String,
       userName: json['userName'] as String,
       userImage: json['userImage'] as String,
+      isRead: json['isRead'] as bool,
     );
 
 Map<String, dynamic> _$MessageModelToJson(MessageModel instance) =>
@@ -25,4 +26,5 @@ Map<String, dynamic> _$MessageModelToJson(MessageModel instance) =>
       'roomId': instance.roomId,
       'userName': instance.userName,
       'userImage': instance.userImage,
+      'isRead': instance.isRead,
     };

@@ -2,13 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iChat/core/extensions/spacing.dart';
-class ChatsAppBar extends StatelessWidget {
+
+class ChatsAppBar extends StatefulWidget {
   final Function(String) onSearch;
+  final TextEditingController searchController;
 
   const ChatsAppBar({
     super.key,
     required this.onSearch,
+    required this.searchController,
   });
+
+  @override
+  State<ChatsAppBar> createState() => _ChatsAppBarState();
+}
+
+class _ChatsAppBarState extends State<ChatsAppBar> {
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,9 @@ class ChatsAppBar extends StatelessWidget {
             ),
           ),
           TextFormField(
-            onChanged: onSearch,
+            onChanged: widget.onSearch,
+            controller: widget.searchController,
+            keyboardType: TextInputType.text,
             decoration: InputDecoration(
               hintText: 'Search',
               hintStyle: const TextStyle(fontWeight: FontWeight.w300),
@@ -42,7 +53,7 @@ class ChatsAppBar extends StatelessWidget {
               filled: true,
               prefixIcon: const Icon(CupertinoIcons.search),
             ),
-          )
+          ),
         ],
       ),
     );

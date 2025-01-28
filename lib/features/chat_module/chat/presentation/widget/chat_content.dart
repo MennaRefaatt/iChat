@@ -76,6 +76,7 @@ class ChatContent extends StatelessWidget {
                                 isCurrentUser ? Colors.white70 : Colors.black54,
                           ),
                         ),
+                        Text(message.isRead ? 'Seen' : 'Delivered'),
                       ],
                     ),
                   ),
